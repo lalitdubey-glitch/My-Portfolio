@@ -44,6 +44,7 @@
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="javascript:void(0)" class="nav-link" id="navLiveProject">Live Project</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="hamburger">
@@ -189,6 +190,10 @@
                             <i class="fas fa-code"></i>
                             <span>jQuery</span>
                         </div>
+                        <div class="skill-card">
+                            <i class="fas fa-sync"></i>
+                            <span>AJAX</span>
+                        </div>
                     </div>
                 </div>
 
@@ -326,7 +331,7 @@
                         <h4>Techpile Technology Pvt. Ltd.</h4>
                         <p>Developed an Event Management System using .NET Technology during summer training,
                             implementing full-stack features and database operations.</p>
-                        <a href="#" class="project-link" id="liveProjectLink">
+                        <a href="javascript:void(0)" class="project-link" id="liveProjectLink">
                             <i class="fas fa-external-link-alt"></i> View Live Project
                         </a>
                     </div>
@@ -351,12 +356,23 @@
                         <h3>Location</h3>
                         <p>Dhaskari, Bhadohi<br>Uttar Pradesh - 221401</p>
                     </div>
-                    <div class="contact-card">
+                    <div class="contact-card social-links-card">
                         <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
+                            <i class="fas fa-share-alt"></i>
                         </div>
-                        <h3>Phone</h3>
-                        <a href="https://wa.me/916393457594" target="_blank">6393457594</a>
+                        <h3>Social Links</h3>
+                        <div class="social-links-grid">
+                            <a href="mailto:lalitdubey8626@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                            <a href="https://wa.me/916393457594" target="_blank" title="WhatsApp"><i
+                                    class="fab fa-whatsapp"></i></a>
+                            <a href="tel:6393457594" title="Call"><i class="fas fa-phone"></i></a>
+                            <a href="https://www.linkedin.com/in/lalit-dubey-9769703aa" target="_blank"
+                                title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.instagram.com/lalit__dubey___" target="_blank" title="Instagram"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="https://github.com/lalitdubey-glitch" target="_blank" title="GitHub"><i
+                                    class="fab fa-github"></i></a>
+                        </div>
                     </div>
                     <div class="contact-card">
                         <div class="contact-icon">
@@ -376,6 +392,9 @@
                         <a href="mailto:lalitdubey8626@gmail.com" class="btn btn-secondary">
                             <i class="fas fa-envelope"></i> Send Email
                         </a>
+                        <a href="javascript:void(0)" class="btn btn-tertiary" id="ctaLiveProject">
+                            <i class="fas fa-external-link-alt"></i> Live Projects
+                        </a>
                     </div>
                 </div>
             </div>
@@ -386,7 +405,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Lalit Dubey. All rights reserved.</p>
+                <p>&copy; <span id="currentYear"></span> Lalit Dubey. All rights reserved.</p>
                 <div class="footer-social">
                     <a href="https://www.linkedin.com/in/lalit-dubey-9769703aa" target="_blank" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
@@ -401,6 +420,28 @@
             </div>
         </div>
     </footer>
+
+    <!-- Projects Modal -->
+    <div id="projectsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>Live Projects List</h2>
+                <div class="header-line"></div>
+            </div>
+            <div class="projects-list">
+                <div class="project-item">
+                    <div class="project-info">
+                        <h3>My Store</h3>
+                        <p>Modern E-commerce Web Application</p>
+                    </div>
+                    <a href="https://mylocalkiranastore.netlify.app/" target="_blank" class="view-btn">View Live <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+                <!-- Future projects can be added here -->
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="assets/vendor/jquery/jquery.min.js"></script>

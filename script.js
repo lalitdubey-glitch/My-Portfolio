@@ -1,6 +1,9 @@
 // jQuery Document Ready
 $(document).ready(function () {
 
+    // ========== Current Year ==========
+    $('#currentYear').text(new Date().getFullYear());
+
     // ========== Preloader ==========
     setTimeout(function () {
         $('.preloader').addClass('hide');
@@ -21,28 +24,156 @@ $(document).ready(function () {
         $('.hamburger').removeClass('active');
     });
 
-    // ========== Clickable Info Cards ==========
-    $('.clickable-card').on('click', function () {
-        const link = $(this).data('link');
-        if (link) {
-            window.location.href = link;
+    // ========== Projects Modal Logic ==========
+    const modal = $('#projectsModal');
+    const closeBtn = $('.close-modal');
+
+    function openModal() {
+        modal.fadeIn(300).css('display', 'flex');
+        $('body').css('overflow', 'hidden');
+    }
+
+    function closeModal() {
+        modal.fadeOut(300);
+        $('body').css('overflow', 'auto');
+    }
+
+    $('#navLiveProject, #ctaLiveProject, #liveProjectLink').on('click', function (e) {
+        e.preventDefault();
+        openModal();
+    });
+
+    closeBtn.on('click', closeModal);
+
+    $(window).on('click', function (e) {
+        if ($(e.target).is(modal)) {
+            closeModal();
         }
     });
 
-    // Add cursor pointer style for clickable cards
+    // ========== Social Links Card Styling ==========
     $('<style>')
         .prop('type', 'text/css')
         .html(`
-            .clickable-card {
-                cursor: pointer;
+            .social-links-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+            .social-links-grid a {
+                width: 45px;
+                height: 45px;
+                background: var(--card-bg);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-primary);
+                font-size: 1.2rem;
                 transition: all 0.3s ease;
+                margin: 0 auto;
             }
-            .clickable-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 15px 40px rgba(108, 99, 255, 0.4);
+            .social-links-grid a:hover {
+                background: var(--primary-color);
+                color: var(--text-primary);
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
             }
-            .clickable-card .info-value {
-                color: var(--primary-color);
+            
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 2000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(15, 15, 30, 0.9);
+                backdrop-filter: blur(8px);
+                justify-content: center;
+                align-items: center;
+            }
+            .modal-content {
+                background: var(--card-bg);
+                padding: 40px;
+                border-radius: 20px;
+                width: 90%;
+                max-width: 500px;
+                position: relative;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+                border: 1px solid rgba(108, 99, 255, 0.2);
+            }
+            .close-modal {
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                font-size: 2rem;
+                cursor: pointer;
+                color: var(--text-secondary);
+                transition: color 0.3s;
+            }
+            .close-modal:hover {
+                color: var(--accent-color);
+            }
+            .modal-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .modal-header h2 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .header-line {
+                width: 50px;
+                height: 3px;
+                background: var(--primary-color);
+                margin: 0 auto;
+            }
+            .project-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: var(--dark-bg);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 15px;
+                transition: transform 0.3s;
+            }
+            .project-item:hover {
+                transform: scale(1.02);
+            }
+            .project-info h3 {
+                font-size: 1.2rem;
+                margin-bottom: 5px;
+            }
+            .project-info p {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+            }
+            .view-btn {
+                background: var(--gradient-1);
+                color: white;
+                text-decoration: none;
+                padding: 10px 15px;
+                border-radius: 8px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.9rem;
+            }
+            
+            /* Footer Centering */
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .footer-social {
+                justify-content: center;
             }
         `)
         .appendTo('head');
@@ -363,18 +494,7 @@ $(document).ready(function () {
     // Add transition to profile image
     $('.profile-img').css('transition', 'transform 0.3s ease');
 
-    // ========== Live Project Link Handler ==========
-    $('#liveProjectLink').on('click', function (e) {
-        e.preventDefault();
-        // You can add your live project URL here
-        const projectUrl = 'YOUR_PROJECT_URL_HERE'; // Replace with actual URL
-
-        if (projectUrl === 'YOUR_PROJECT_URL_HERE') {
-            alert('Please add your live project URL in the script.js file');
-        } else {
-            window.open(projectUrl, '_blank');
-        }
-    });
+    // Live project specific event listeners are now handled in the modal logic above.
 
     // ========== Skills Progress Animation ==========
     function animateSkills() {
