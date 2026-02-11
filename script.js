@@ -22,6 +22,7 @@ $(document).ready(function () {
         // Close mobile menu after clicking
         $('.nav-menu').removeClass('active');
         $('.hamburger').removeClass('active');
+        $('.dropdown').removeClass('active');
     });
 
     // ========== Projects Modal Logic ==========
@@ -77,9 +78,12 @@ $(document).ready(function () {
             }
             .social-links-grid a:hover {
                 background: var(--primary-color);
-                color: var(--text-primary);
+                color: #ffffff !important;
                 transform: translateY(-5px);
                 box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
+            }
+            .social-links-grid a:hover i {
+                color: #ffffff !important;
             }
             
             /* Modal Styles */
@@ -168,12 +172,17 @@ $(document).ready(function () {
             
             /* Footer Centering */
             .footer-content {
+                display: flex;
                 flex-direction: column;
                 gap: 20px;
                 text-align: center;
+                align-items: center;
+                justify-content: center;
             }
             .footer-social {
+                display: flex;
                 justify-content: center;
+                align-items: center;
             }
         `)
         .appendTo('head');
@@ -182,6 +191,16 @@ $(document).ready(function () {
     $('.hamburger').on('click', function () {
         $(this).toggleClass('active');
         $('.nav-menu').toggleClass('active');
+        // Reset dropdowns when menu is toggled
+        $('.dropdown').removeClass('active');
+    });
+
+    // ========== Mobile Dropdown Toggle ==========
+    $('.dropdown > a').on('click', function (e) {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            $(this).parent().toggleClass('active');
+        }
     });
 
     // ========== Navbar Scroll Effect ==========
