@@ -1,17 +1,19 @@
-// jQuery Document Ready
 $(document).ready(function () {
+    function updateDateTime() {
+        $('#currentYear').text(new Date().toLocaleString());
+    }
+    setInterval(updateDateTime, 1000);
 
-    // ========== Current Year ==========
-    $('#currentYear').text(new Date().getFullYear());
-
-    // ========== Preloader ==========
+    // ========== website open hone se pehle jo loading screen aati hai uske liye ==========
     setTimeout(function () {
         $('.preloader').addClass('hide');
     }, 1500);
 
-    // ========== Smooth Scrolling ==========
+    // ========== Smooth Scrolling 
+    //($('a[href^="#"]'))यह उन सभी लिंक्स को चुनता है जिनका href हैश (#) से शुरू होता है (जैसे #about, #skills)
+
     $('a[href^="#"]').on('click', function (e) {
-        e.preventDefault();
+        e.preventDefault();  // jhatke se niche jaane se rokta h
         var target = $(this.getAttribute('href'));
         if (target.length) {
             $('html, body').stop().animate({
@@ -52,142 +54,7 @@ $(document).ready(function () {
         }
     });
 
-    // ========== Social Links Card Styling ==========
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            .social-links-grid {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                margin-top: 20px;
-            }
-            .social-links-grid a {
-                width: 45px;
-                height: 45px;
-                background: var(--card-bg);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: var(--text-primary);
-                font-size: 1.2rem;
-                transition: all 0.3s ease;
-                margin: 0 auto;
-            }
-            .social-links-grid a:hover {
-                background: var(--primary-color);
-                color: #ffffff !important;
-                transform: translateY(-5px);
-                box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
-            }
-            .social-links-grid a:hover i {
-                color: #ffffff !important;
-            }
-            
-            /* Modal Styles */
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 2000;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(15, 15, 30, 0.9);
-                backdrop-filter: blur(8px);
-                justify-content: center;
-                align-items: center;
-            }
-            .modal-content {
-                background: var(--card-bg);
-                padding: 40px;
-                border-radius: 20px;
-                width: 90%;
-                max-width: 500px;
-                position: relative;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-                border: 1px solid rgba(108, 99, 255, 0.2);
-            }
-            .close-modal {
-                position: absolute;
-                right: 20px;
-                top: 20px;
-                font-size: 2rem;
-                cursor: pointer;
-                color: var(--text-secondary);
-                transition: color 0.3s;
-            }
-            .close-modal:hover {
-                color: var(--accent-color);
-            }
-            .modal-header {
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            .modal-header h2 {
-                font-size: 2rem;
-                margin-bottom: 10px;
-            }
-            .header-line {
-                width: 50px;
-                height: 3px;
-                background: var(--primary-color);
-                margin: 0 auto;
-            }
-            .project-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background: var(--dark-bg);
-                padding: 20px;
-                border-radius: 12px;
-                margin-bottom: 15px;
-                transition: transform 0.3s;
-            }
-            .project-item:hover {
-                transform: scale(1.02);
-            }
-            .project-info h3 {
-                font-size: 1.2rem;
-                margin-bottom: 5px;
-            }
-            .project-info p {
-                font-size: 0.9rem;
-                color: var(--text-secondary);
-            }
-            .view-btn {
-                background: var(--gradient-1);
-                color: white;
-                text-decoration: none;
-                padding: 10px 15px;
-                border-radius: 8px;
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                font-size: 0.9rem;
-            }
-            
-            /* Footer Centering */
-            .footer-content {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-                align-items: center;
-                justify-content: center;
-            }
-            .footer-social {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        `)
-        .appendTo('head');
-
-    // ========== Hamburger Menu ==========
+    // ========== Hamburger Menu (nav ko cross and wapas se 3 lines me badalta h)==========
     $('.hamburger').on('click', function () {
         $(this).toggleClass('active');
         $('.nav-menu').toggleClass('active');
@@ -245,7 +112,7 @@ $(document).ready(function () {
 
         $('.typed-text').text(letter);
 
-        let typeSpeed = 150;
+        let typeSpeed = 100;
 
         if (isDeleting) {
             typeSpeed /= 2;
@@ -289,31 +156,10 @@ $(document).ready(function () {
         $('.hero-particles').append(particle);
     }
 
-    // Add CSS animation for particles
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            @keyframes rise {
-                0% {
-                    bottom: -10px;
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 1;
-                }
-                90% {
-                    opacity: 1;
-                }
-                100% {
-                    bottom: 100%;
-                    opacity: 0;
-                }
-            }
-        `)
-        .appendTo('head');
+
 
     // Create particles
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 100; i++) {
         createParticle();
     }
 
@@ -331,21 +177,6 @@ $(document).ready(function () {
         });
     }
 
-    // Add fade-in animation CSS
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            .skill-card, .experience-card, .timeline-item, .contact-card {
-                opacity: 0;
-                transform: translateY(30px);
-                transition: all 0.6s ease;
-            }
-            .skill-card.fade-in, .experience-card.fade-in, .timeline-item.fade-in, .contact-card.fade-in {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        `)
-        .appendTo('head');
 
     $(window).on('scroll', checkScroll);
     checkScroll(); // Initial check
@@ -357,18 +188,6 @@ $(document).ready(function () {
         $(this).removeClass('pulse-animation');
     });
 
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            @keyframes pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-            }
-            .pulse-animation {
-                animation: pulse 0.5s ease;
-            }
-        `)
-        .appendTo('head');
 
     // ========== Click Handlers for Contact ==========
 
@@ -388,15 +207,6 @@ $(document).ready(function () {
         }, 300);
     });
 
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            .btn-clicked {
-                transform: scale(0.95);
-                transition: transform 0.1s ease;
-            }
-        `)
-        .appendTo('head');
 
     // ========== Counter Animation (Optional Enhancement) ==========
     function animateCounter(element, target) {
@@ -440,38 +250,6 @@ $(document).ready(function () {
     const backToTop = $('<div class="back-to-top"><i class="fas fa-arrow-up"></i></div>');
     $('body').append(backToTop);
 
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            .back-to-top {
-                position: fixed;
-                bottom: 30px;
-                right: 30px;
-                width: 50px;
-                height: 50px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                cursor: pointer;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                z-index: 999;
-                box-shadow: 0 5px 20px rgba(108, 99, 255, 0.4);
-            }
-            .back-to-top.show {
-                opacity: 1;
-                visibility: visible;
-            }
-            .back-to-top:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 30px rgba(108, 99, 255, 0.6);
-            }
-        `)
-        .appendTo('head');
 
     $(window).on('scroll', function () {
         if ($(this).scrollTop() > 500) {
@@ -524,20 +302,6 @@ $(document).ready(function () {
         });
     }
 
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            .skill-category {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            .skill-category.skill-appear {
-                opacity: 1;
-                transform: translateY(0);
-                transition: all 0.6s ease;
-            }
-        `)
-        .appendTo('head');
 
     let skillsAnimated = false;
     $(window).on('scroll', function () {
@@ -580,27 +344,6 @@ $(document).ready(function () {
     const cursor = $('<div class="cursor-dot"></div>');
     $('body').append(cursor);
 
-    $('<style>')
-        .prop('type', 'text/css')
-        .html(`
-            .cursor-dot {
-                width: 10px;
-                height: 10px;
-                background: rgba(108, 99, 255, 0.6);
-                border-radius: 50%;
-                position: fixed;
-                pointer-events: none;
-                z-index: 9999;
-                transition: transform 0.2s ease;
-                display: none;
-            }
-            @media (min-width: 768px) {
-                .cursor-dot {
-                    display: block;
-                }
-            }
-        `)
-        .appendTo('head');
 
     $(document).on('mousemove', function (e) {
         cursor.css({
