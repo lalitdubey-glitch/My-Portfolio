@@ -10,10 +10,9 @@ $(document).ready(function () {
     }, 1500);
 
     // ========== Smooth Scrolling 
-    //($('a[href^="#"]'))यह उन सभी लिंक्स को चुनता है जिनका href हैश (#) से शुरू होता है (जैसे #about, #skills)
+    //($('a[href^="#"]')) it will select all those element which start with "#" (like #about, #skills)
 
-    $('a[href^="#"]').on('click', function (e) {
-        e.preventDefault();  // jhatke se niche jaane se rokta h
+    $('a[href^="#"]').on('click', function () {
         var target = $(this.getAttribute('href'));
         if (target.length) {
             $('html, body').stop().animate({
@@ -163,23 +162,22 @@ $(document).ready(function () {
         createParticle();
     }
 
-    // ========== Scroll Animations ==========
-    function checkScroll() {
-        $('.skill-card, .experience-card, .timeline-item, .contact-card').each(function () {
-            var elementTop = $(this).offset().top;
-            var elementBottom = elementTop + $(this).outerHeight();
-            var viewportTop = $(window).scrollTop();
-            var viewportBottom = viewportTop + $(window).height();
+    // ========== Scroll Animations (Global) ==========
+    $(window).on('scroll', function () {
+        $('.skill-card, .experience-card, .timeline-item, .contact-card, .skill-category').each(function () {
+            const elementTop = $(this).offset().top;
+            const viewportBottom = $(window).scrollTop() + $(window).height();
 
-            if (elementBottom > viewportTop && elementTop < viewportBottom) {
-                $(this).addClass('fade-in');
+            if (viewportBottom > elementTop + 50) {
+                if ($(this).hasClass('skill-category')) {
+                    $(this).addClass('skill-appear');
+                } else {
+                    $(this).addClass('fade-in');
+                }
             }
         });
-    }
-
-
-    $(window).on('scroll', checkScroll);
-    checkScroll(); // Initial check
+    });
+    $(window).trigger('scroll'); // Initial check
 
     // ========== Skill Card Interactive Effect ==========
     $('.skill-card').on('mouseenter', function () {
@@ -189,60 +187,18 @@ $(document).ready(function () {
     });
 
 
-    // ========== Click Handlers for Contact ==========
-
-    // WhatsApp click handler
-    $('a[href^="https://wa.me"]').on('click', function (e) {
-        $(this).addClass('btn-clicked');
-        setTimeout(() => {
-            $(this).removeClass('btn-clicked');
-        }, 300);
-    });
-
-    // Email click handler
-    $('a[href^="mailto:"]').on('click', function (e) {
-        $(this).addClass('btn-clicked');
-        setTimeout(() => {
-            $(this).removeClass('btn-clicked');
-        }, 300);
-    });
-
-
-    // ========== Counter Animation (Optional Enhancement) ==========
-    function animateCounter(element, target) {
-        let current = 0;
-        const increment = target / 50;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                element.text(target.toFixed(1) + '%');
-                clearInterval(timer);
-            } else {
-                element.text(current.toFixed(1) + '%');
-            }
-        }, 30);
-    }
-
+    // ========== Counter Animation ==========
     let counterAnimated = false;
     $(window).on('scroll', function () {
-        if (!counterAnimated) {
-            const educationSection = $('#education');
-            if (educationSection.length) {
-                const elementTop = educationSection.offset().top;
-                const viewportBottom = $(window).scrollTop() + $(window).height();
-
-                if (viewportBottom > elementTop) {
-                    $('.percentage').each(function () {
-                        const text = $(this).text();
-                        const value = parseFloat(text);
-                        if (!isNaN(value)) {
-                            $(this).text('0%');
-                            animateCounter($(this), value);
-                        }
-                    });
-                    counterAnimated = true;
-                }
-            }
+        const eduSection = $('#education');
+        if (!counterAnimated && eduSection.length && $(window).scrollTop() + $(window).height() > eduSection.offset().top + 50) {
+            $('.percentage').each(function () {
+                $(this).prop('Counter', 0).animate({ Counter: parseFloat($(this).text()) }, {
+                    duration: 1500,
+                    step: function (now) { $(this).text(now.toFixed(1) + '%'); }
+                });
+            });
+            counterAnimated = true;
         }
     });
 
@@ -263,82 +219,8 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: 0 }, 800);
     });
 
-    // ========== Tilt Effect on Image ==========
-    let mouseX = 0;
-    let mouseY = 0;
-
-    $('.image-box').on('mousemove', function (e) {
-        const rect = this.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const deltaX = (mouseX - centerX) / centerX;
-        const deltaY = (mouseY - centerY) / centerY;
-
-        const rotateX = deltaY * 10;
-        const rotateY = -deltaX * 10;
-
-        $(this).find('.profile-img').css('transform', `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`);
-    });
-
-    $('.image-box').on('mouseleave', function () {
-        $(this).find('.profile-img').css('transform', 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)');
-    });
-
-    // Add transition to profile image
-    $('.profile-img').css('transition', 'transform 0.3s ease');
-
-    // Live project specific event listeners are now handled in the modal logic above.
-
-    // ========== Skills Progress Animation ==========
-    function animateSkills() {
-        $('.skill-category').each(function (index) {
-            setTimeout(() => {
-                $(this).addClass('skill-appear');
-            }, index * 100);
-        });
-    }
 
 
-    let skillsAnimated = false;
-    $(window).on('scroll', function () {
-        if (!skillsAnimated) {
-            const skillsSection = $('#skills');
-            if (skillsSection.length) {
-                const elementTop = skillsSection.offset().top;
-                const viewportBottom = $(window).scrollTop() + $(window).height();
-
-                if (viewportBottom > elementTop + 100) {
-                    animateSkills();
-                    skillsAnimated = true;
-                }
-            }
-        }
-    });
-
-    // ========== Experience Cards Stagger Animation ==========
-    let experienceAnimated = false;
-    $(window).on('scroll', function () {
-        if (!experienceAnimated) {
-            const experienceSection = $('#experience');
-            if (experienceSection.length) {
-                const elementTop = experienceSection.offset().top;
-                const viewportBottom = $(window).scrollTop() + $(window).height();
-
-                if (viewportBottom > elementTop + 100) {
-                    $('.experience-card').each(function (index) {
-                        setTimeout(() => {
-                            $(this).addClass('fade-in');
-                        }, index * 200);
-                    });
-                    experienceAnimated = true;
-                }
-            }
-        }
-    });
 
     // ========== Cursor Trail Effect (Optional) ==========
     const cursor = $('<div class="cursor-dot"></div>');
@@ -364,30 +246,3 @@ $(document).ready(function () {
 
 });
 
-// Vanilla JavaScript for additional functionality
-document.addEventListener('DOMContentLoaded', function () {
-
-    // ========== Lazy Loading for Images ==========
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || img.src;
-                    img.classList.add('loaded');
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    // ========== Prevent Context Menu on Images (Optional) ==========
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('contextmenu', e => e.preventDefault());
-    });
-
-});
