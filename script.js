@@ -223,28 +223,28 @@ $(document).ready(function () {
         }, 30);
     }
 
-    let counterAnimated = false;
-    $(window).on('scroll', function () {
-        if (!counterAnimated) {
-            const educationSection = $('#education');
-            if (educationSection.length) {
-                const elementTop = educationSection.offset().top;
-                const viewportBottom = $(window).scrollTop() + $(window).height();
+    // let counterAnimated = false;
+    // $(window).on('scroll', function () {
+    //     if (!counterAnimated) {
+    //         const educationSection = $('#education');
+    //         if (educationSection.length) {
+    //             const elementTop = educationSection.offset().top;
+    //             const viewportBottom = $(window).scrollTop() + $(window).height();
 
-                if (viewportBottom > elementTop) {
-                    $('.percentage').each(function () {
-                        const text = $(this).text();
-                        const value = parseFloat(text);
-                        if (!isNaN(value)) {
-                            $(this).text('0%');
-                            animateCounter($(this), value);
-                        }
-                    });
-                    counterAnimated = true;
-                }
-            }
-        }
-    });
+    //             if (viewportBottom > elementTop) {
+    //                 $('.percentage').each(function () {
+    //                     const text = $(this).text();
+    //                     const value = parseFloat(text);
+    //                     if (!isNaN(value)) {
+    //                         $(this).text('0%');
+    //                         animateCounter($(this), value);
+    //                     }
+    //                 });
+    //                 counterAnimated = true;
+    //             }
+    //         }
+    //     }
+    // });
 
     // ========== Back to Top Button ==========
     const backToTop = $('<div class="back-to-top"><i class="fas fa-arrow-up"></i></div>');
